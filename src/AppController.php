@@ -15,6 +15,6 @@ class AppController
 
         // compiler le fichier .tpl vers du HTML
         return $template->render();
-        return '<h1>Hello ' . $_GET['name'] . '</h1>';
+        //return '<h1>Hello ' . $_GET['name'] . '</h1>';
     }
 }

@@ -29,6 +29,24 @@ class Template
 
     public function render(): string
     {
-        return 'blabla';
+
+        //$html = file_get_contents($this->templatePath);
+        //$name = 'Hugo';
+        //$lastName = 'Bar';
+
+        // 1. Capture tous les echo / var_dump / includes faits entre un ob_start() et ob_get_clean()
+        ob_start();
+        ob_implicit_flush(false);
+
+        // 2. permet la déclaration automatique de variables locales à partir
+        // d'un tableau associatif.
+        extract($this->vars);
+
+        // 3. Inclue et exécute le code PHP avec les variables déclarées dans la méthode render()
+        include $this->templatePath;
+
+        $html = ob_get_clean();
+
+        return $html;
     }
 }
