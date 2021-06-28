@@ -1,5 +1,6 @@
 <?php
 
+require __DIR__ . '/Exception/FileNotFoundException.php';
 
 class Template
 {
@@ -13,6 +14,9 @@ class Template
      */
     public function __construct(string $templatePath)
     {
+        if (!is_readable($templatePath)) {
+            throw new FileNotFoundException(sprintf('The file %s is not found', $templatePath));
+        }
         $this->templatePath = $templatePath;
     }
 
@@ -29,7 +33,6 @@ class Template
 
     public function render(): string
     {
-
         //$html = file_get_contents($this->templatePath);
         //$name = 'Hugo';
         //$lastName = 'Bar';

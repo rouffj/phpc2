@@ -9,6 +9,7 @@ class AppController
      */
     public function hello(): string
     {
+        //$template = new Template(__DIR__ . '/../templates/hello.tpl.php');
         $template = new Template(__DIR__ . '/../templates/hello.tpl.php');
         $template->setVar('name', $_GET['name']);
         $template->setVar('lastName', 'Bar');
