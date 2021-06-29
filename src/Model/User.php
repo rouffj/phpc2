@@ -3,8 +3,7 @@
 
 class User
 {
-    private $first_name;
-    //private $firstName;
+    private $firstName;
     private $lastName;
     private $email;
 
@@ -37,7 +36,7 @@ class User
      *
      * @param $name
      * @param $value
-     */
+
     public function __set($name, $value)
     {
         $columns = [
@@ -47,4 +46,5 @@ class User
 
         $this->{$columns[$name]} = $value;
     }
+     */
 }
