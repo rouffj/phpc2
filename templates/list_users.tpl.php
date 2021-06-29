@@ -11,9 +11,9 @@
     <tbody>
         <?php foreach ($users as $user): ?>
         <tr>
-            <td><?php echo $user['firstName'] ?></td>
-            <td><?php echo $user['lastName'] ?></td>
-            <td><?php echo $user['email'] ?></td>
+            <td><?php echo $user->getFirstName() ?></td>
+            <td><?php echo $user->getLastName() ?></td>
+            <td><?php echo $user->getEmail() ?></td>
         </tr>
         <?php endforeach ?>
     </tbody>

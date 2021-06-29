@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/Template.php';
 require_once __DIR__ . '/Service/DB.php';
+require_once __DIR__ . '/Model/User.php';
 
 class AppController
 {
@@ -36,7 +37,9 @@ class AppController
         $connection = $db->getConnection();
         $query = $connection->prepare('SELECT * from User');
         $query->execute();
-        $users = $query->fetchAll();
+
+        $users = $query->fetchAll(PDO::FETCH_CLASS, 'User');
+        //var_dump($users);die;
 
         $template = new Template(__DIR__ . '/../templates/list_users.tpl.php');
         $template->extends(__DIR__ . '/../templates/layout.tpl.php');

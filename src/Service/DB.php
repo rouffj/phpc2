@@ -7,7 +7,9 @@ class DB
 
     public function __construct($dsn, $user, $password)
     {
-        $this->connection = new \PDO($dsn, $user, $password);
+        $this->connection = new \PDO($dsn, $user, $password, [
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_CLASS
+        ]);
     }
 
     /**
