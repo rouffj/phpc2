@@ -11,10 +11,15 @@ class AppController
     {
         //$template = new Template(__DIR__ . '/../templates/hello.tpl.php');
         $template = new Template(__DIR__ . '/../templates/hello.tpl.php');
+
+        // option 1
         $template
             ->setVar('name', $_GET['name'])
             ->setVar('lastName', 'ROUFF')
         ;
+
+        // option 2
+        $template->school = 'EPITECH';
 
         // compiler le fichier .tpl vers du HTML
         return $template->render();

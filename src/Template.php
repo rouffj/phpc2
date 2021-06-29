@@ -56,4 +56,10 @@ class Template
 
         return $html;
     }
+
+
+    public function __set($name, $value)
+    {
+        $this->vars[$name] = $value;
+    }
 }
