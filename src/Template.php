@@ -4,6 +4,11 @@ require __DIR__ . '/Exception/FileNotFoundException.php';
 
 class Template
 {
+    /**
+     * @var Template
+     */
+    private $parentTemplate;
+
     private $templatePath;
 
     private $vars = [];
@@ -54,12 +59,29 @@ class Template
 
         $html = ob_get_clean();
 
+        // Quand un template a un parent, on appelle son render, sinon on génère uniquement le HTML du template
+        if ($this->parentTemplate) {
+            $this->parentTemplate->setVar('_content', $html);
+            $html = $this->parentTemplate->render();
+        }
+
         return $html;
     }
 
+    public function extends(string $templatePath)
+    {
+        $this->parentTemplate = new Template($templatePath);
+    }
 
     public function __set($name, $value)
     {
         $this->vars[$name] = $value;
+    }
+
+    public function __get($name)
+    {
+        if (isset($this->vars[$name])) {
+            return $this->vars[$name];
+        }
     }
 }

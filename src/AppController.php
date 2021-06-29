@@ -18,11 +18,22 @@ class AppController
             ->setVar('lastName', 'ROUFF')
         ;
 
+        // implement __get()
+        var_dump($template->lastName);
+
         // option 2
         $template->school = 'EPITECH';
 
         // compiler le fichier .tpl vers du HTML
         return $template->render();
         //return '<h1>Hello ' . $_GET['name'] . '</h1>';
+    }
+
+    public function listUsers()
+    {
+        $template = new Template(__DIR__ . '/../templates/list_users.tpl.php');
+        $template->extends(__DIR__ . '/../templates/layout.tpl.php');
+
+        return $template->render();
     }
 }
