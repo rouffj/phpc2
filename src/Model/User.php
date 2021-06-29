@@ -3,7 +3,8 @@
 
 class User
 {
-    private $firstName;
+    private $first_name;
+    //private $firstName;
     private $lastName;
     private $email;
 
@@ -29,5 +30,21 @@ class User
     public function getLastName(): string
     {
         return $this->lastName;
+    }
+
+    /**
+     * Allow to map column names with class properties.
+     *
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value)
+    {
+        $columns = [
+            'first_name' => 'firstName',
+            'last_name' => 'lastName',
+        ];
+
+        $this->{$columns[$name]} = $value;
     }
 }
