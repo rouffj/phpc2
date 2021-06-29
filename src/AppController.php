@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/Template.php';
+require_once __DIR__ . '/Service/DB.php';
 
 class AppController
 {
@@ -31,8 +32,16 @@ class AppController
 
     public function listUsers()
     {
+        $db = new DB('sqlite:' . __DIR__ . '/../training.db', null, null);
+        $connection = $db->getConnection();
+        $query = $connection->prepare('SELECT * from User');
+        $query->execute();
+        $users = $query->fetchAll();
+
         $template = new Template(__DIR__ . '/../templates/list_users.tpl.php');
         $template->extends(__DIR__ . '/../templates/layout.tpl.php');
+
+        $template->users = $users;
 
         return $template->render();
     }
