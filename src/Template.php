@@ -68,6 +68,11 @@ class Template
         return $html;
     }
 
+    public function escape($variable): string
+    {
+        return htmlspecialchars($variable, ENT_QUOTES);
+    }
+
     public function extends(string $templatePath)
     {
         $this->parentTemplate = new Template($templatePath);
