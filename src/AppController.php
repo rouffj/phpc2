@@ -11,8 +11,10 @@ class AppController
     {
         //$template = new Template(__DIR__ . '/../templates/hello.tpl.php');
         $template = new Template(__DIR__ . '/../templates/hello.tpl.php');
-        $template->setVar('name', $_GET['name']);
-        $template->setVar('lastName', 'Bar');
+        $template
+            ->setVar('name', $_GET['name'])
+            ->setVar('lastName', 'ROUFF')
+        ;
 
         // compiler le fichier .tpl vers du HTML
         return $template->render();

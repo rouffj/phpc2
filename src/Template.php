@@ -25,10 +25,14 @@ class Template
      *
      * @param string $varName
      * @param mixed $varValue
+     *
+     * @return Template
      */
-    public function setVar(string $varName, $varValue): void
+    public function setVar(string $varName, $varValue): Template
     {
         $this->vars[$varName] = $varValue;
+
+        return $this;
     }
 
     public function render(): string
