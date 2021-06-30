@@ -58,6 +58,22 @@ class AppController
         return $template->render();
     }
 
+    public function editUser()
+    {
+        $query = $this->dbConnection->prepare('SELECT * from User WHERE id=:id');
+        $query->execute([':id' => $_GET['id']]);
+        $user = $query->fetchObject('User');
+        $template = new Template(__DIR__.'/../templates/add_user.tpl.php');
+        $template->extends(__DIR__.'/../templates/layout.tpl.php');
+
+        $template
+            ->setVar('is_edit', true)
+            ->setVar('user', $user)
+        ;
+
+        return $template->render();
+    }
+
     public function addUser()
     {
         $template = new Template(__DIR__.'/../templates/add_user.tpl.php');

@@ -3,9 +3,18 @@
 
 class User
 {
+    private $id;
     private $firstName;
     private $lastName;
     private $email;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @return string

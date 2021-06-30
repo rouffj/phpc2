@@ -6,6 +6,7 @@
         <th>first name</th>
         <th>last name</th>
         <th>email</th>
+        <th>actions</th>
     </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
             <td><?php echo $user->getFirstName() ?></td>
             <td><?php echo $user->getLastName() ?></td>
             <td><?php echo $user->getEmail() ?></td>
+            <td><a href="/?action=editUser&id=<?php echo $user->getId() ?>">Edit</a></td>
         </tr>
         <?php endforeach ?>
     </tbody>
