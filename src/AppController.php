@@ -60,6 +60,20 @@ class AppController
 
     public function editUser()
     {
+        // 1) We update the user
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            $query = $this->dbConnection->prepare('UPDATE User SET firstName=:firstName, lastName=:lastName, email=:email WHERE id=:id');
+            $query->execute([
+                ':firstName' => $_POST['first_name'],
+                ':lastName' => $_POST['last_name'],
+                ':email' => $_POST['email'],
+                ':id' => $_GET['id'],
+            ]);
+
+            //header(sprintf('Location: /?action=editUser&id=%s', $_GET['id']));
+        }
+
+        // 2. We retrieve the user updated from the DB
         $query = $this->dbConnection->prepare('SELECT * from User WHERE id=:id');
         $query->execute([':id' => $_GET['id']]);
         $user = $query->fetchObject('User');
@@ -80,6 +94,9 @@ class AppController
         $template->extends(__DIR__.'/../templates/layout.tpl.php');
 
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
+
+            $this->dbConnection->beginTransaction();
+
             $query = $this->dbConnection->prepare('INSERT INTO User (firstName, lastName, email) VALUES (:firstName, :lastName, :email)');
             //option 1
             //$query->bindParam(':firstName', $_POST['first_name'], PDO::PARAM_STR);
@@ -97,6 +114,8 @@ class AppController
             var_dump($_POST, $userId);
         }
 
+        $template->user = new User();
+        $template->is_edit = false;
         return $template->render();
     }
 }

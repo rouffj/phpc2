@@ -21,5 +21,5 @@
         <input name="email" type="email" value="<?php echo $user->getEmail() ?>" />
     </div>
 
-    <p><input type="submit" value="Add new user"> Or <a href="/?action=listUsers">Cancel</a></p>
+    <p><input type="submit" value="<?php echo $is_edit ? 'Update' : 'Add new user' ?>"> Or <a href="/?action=listUsers">Cancel</a></p>
 </form>
