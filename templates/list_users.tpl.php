@@ -19,3 +19,5 @@
     </tbody>
 </table>
 
+<p><a href="/?action=addUser">Add a new user</a></p>
+
