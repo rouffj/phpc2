@@ -22,8 +22,10 @@ class ExceptionFileLogger
             ],
         ];
 
-        $xmlEncoder = new XmlEncoder(['xml_format_output' => true, 'xml_root_node_name' => 'logs']);
+        $xmlEncoder = new XmlEncoder(['xml_format_output' => true, 'xml_root_node_name' => 'log']);
 
-        return $xmlEncoder->encode($data, 'xml');
+        $xmlAsString = $xmlEncoder->encode($data, 'xml');
+
+        return $xmlAsString;
     }
 }
