@@ -1,8 +1,11 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
 
 require_once __DIR__ . '/Template.php';
 require_once __DIR__ . '/Service/DB.php';
 require_once __DIR__ . '/Model/User.php';
+
+use App\ExceptionFileLogger;
 
 class AppController
 {
@@ -11,10 +14,13 @@ class AppController
      */
     private $dbConnection;
 
+    private $logger;
+
     public function __construct()
     {
         $db = new DB('sqlite:' . __DIR__ . '/../training.db', null, null);
         $this->dbConnection = $db->getConnection();
+        $this->logger = new ExceptionFileLogger();
     }
 
     /**
@@ -125,5 +131,14 @@ class AppController
         $template->user = new User();
         $template->is_edit = false;
         return $template->render();
+    }
+
+    public function generateError()
+    {
+        try {
+            throw new \InvalidArgumentException('Id not found', 404);
+        } catch (\Exception $e) {
+            return $this->logger->logException($e);
+        }
     }
 }
