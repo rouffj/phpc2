@@ -94,24 +94,32 @@ class AppController
         $template->extends(__DIR__.'/../templates/layout.tpl.php');
 
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            try {
+                $this->dbConnection->beginTransaction();
 
-            $this->dbConnection->beginTransaction();
+                $query = $this->dbConnection->prepare('INSERT INTO User (firstName, lastName, email) VALUES (:firstName, :lastName, :email)');
+                //option 1
+                //$query->bindParam(':firstName', $_POST['first_name'], PDO::PARAM_STR);
+                //$query->bindParam(':lastName', $_POST['last_name']);
+                //$query->bindParam(':email', $_POST['email']);
+                // OR option 2
+                $query->execute([
+                    ':firstName' => $_POST['first_name'],
+                    ':lastName' => $_POST['last_name'],
+                    ':email' => $_POST['email']
+                ]);
+                //$rows = $query->fetchAll();
+                $userId = $this->dbConnection->lastInsertId();
 
-            $query = $this->dbConnection->prepare('INSERT INTO User (firstName, lastName, email) VALUES (:firstName, :lastName, :email)');
-            //option 1
-            //$query->bindParam(':firstName', $_POST['first_name'], PDO::PARAM_STR);
-            //$query->bindParam(':lastName', $_POST['last_name']);
-            //$query->bindParam(':email', $_POST['email']);
-            // OR option 2
-            $query->execute([
-                ':firstName' => $_POST['first_name'],
-                ':lastName' => $_POST['last_name'],
-                ':email' => $_POST['email']
-            ]);
-            //$rows = $query->fetchAll();
-            $userId = $this->dbConnection->lastInsertId();
+                // Uncomment this line to see the transaction rollback executed.
+                //throw new \DomainException('Some business rules are not respected');
 
-            var_dump($_POST, $userId);
+                var_dump($_POST, $userId);
+
+                $this->dbConnection->commit();
+            } catch(\Exception $e) {
+                $this->dbConnection->rollBack();
+            }
         }
 
         $template->user = new User();
